@@ -35,7 +35,7 @@ const Chat = () => {
     ]);
 
     try {
-      const response = await fetch('http://localhost:3000/api/ask', {
+      const response = await fetch(process.env.API_ASK_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
