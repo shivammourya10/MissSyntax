@@ -35,7 +35,11 @@ const Chat = () => {
     ]);
 
     try {
-      const response = await fetch(process.env.API_ASK_URL, {
+      // Fix: Remove 'process' from import.meta.env
+      const apiUrl = import.meta.env.VITE_API_ASK_URL ;
+      console.log('Using API URL:', apiUrl); // Debug log
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
