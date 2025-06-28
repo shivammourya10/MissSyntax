@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
-const InputBox = ({ onSendMessage }) => {
+const InputBox = ({ onSendMessage, disabled = false }) => {
   const [message, setMessage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (message.trim()) {
+    if (message.trim() && !disabled) {
       onSendMessage(message);
       setMessage('');
     }
@@ -21,7 +21,9 @@ const InputBox = ({ onSendMessage }) => {
         p: 2,
         display: 'flex',
         gap: 1,
-        borderTop: '1px solid #e0e0e0'
+        borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(10px)',
       }}
     >
       <TextField
@@ -31,8 +33,35 @@ const InputBox = ({ onSendMessage }) => {
         placeholder="Ask me anything about coding or life..."
         variant="outlined"
         size="small"
+        disabled={disabled}
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            background: 'rgba(255, 255, 255, 0.9)',
+            backdropFilter: 'blur(10px)',
+            '& fieldset': {
+              borderColor: 'rgba(255, 255, 255, 0.3)',
+            },
+            '&:hover fieldset': {
+              borderColor: 'rgba(255, 255, 255, 0.5)',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: 'rgba(255, 255, 255, 0.7)',
+            },
+          },
+        }}
       />
-      <IconButton type="submit" color="primary">
+      <IconButton 
+        type="submit" 
+        color="primary" 
+        disabled={disabled || !message.trim()}
+        sx={{
+          background: 'rgba(255, 255, 255, 0.2)',
+          backdropFilter: 'blur(10px)',
+          '&:hover': {
+            background: 'rgba(255, 255, 255, 0.3)',
+          },
+        }}
+      >
         <SendIcon />
       </IconButton>
     </Box>
